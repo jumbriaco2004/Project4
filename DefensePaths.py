@@ -1,5 +1,6 @@
 import math, random
 from panda3d.core import *
+from panda3d.core import Vec3
 
 def Cloud(radius = 1):
     x = 2 * random.random() - 1
@@ -28,29 +29,29 @@ def BaseballSeams(step, numSeams, B, F = 1):
 
     return Vec3(x, y, z)
 
-def CircleXY(radius = 1):
-    x = 0
-    for i in range(100):
-        theta = x
-        unitVec = Vec3(50.0 * math.cos(theta), 50.0 * math.sin(theta), 0.0 * math.tan(theta))
-        unitVec.normalize()
-        x = x + 0.06
-    return unitVec * radius
+def CircleXY(radius=1, numPoints=30):
+    points = []
+    for i in range(numPoints):
+        theta = i / numPoints * 2 * math.pi
+        x = radius * math.cos(theta)
+        y = radius * math.sin(theta)
+        points.append(Vec3(x, y, 0))
+    return points
 
-def CircleXZ(radius = 1):
-    x = 0
-    for i in range(100):
-        theta = x
-        unitVec = Vec3(50.0 * math.cos(theta), 0.0, 50.0 * math.sin(theta))
-        unitVec.normalize()
-        x = x + 0.06
-    return unitVec * radius
+def CircleXZ(radius = 1, numPoints = 30):
+    points = []
+    for i in range(numPoints):
+        theta = i / numPoints * 2 * math.pi
+        x = radius * math.cos(theta)
+        z = radius * math.sin(theta)
+        points.append(Vec3(x, 0, z))
+    return points
      
-def CircleYZ(radius = 1):
-    x = 0
-    for i in range(100):
-        theta = x
-        unitVec = Vec3(0.0, 50.0 * math.cos(theta), 50.0 * math.sin(theta))
-        unitVec.normalize()
-        x = x + 0.06
-    return unitVec * radius
+def CircleYZ(radius = 1, numPoints = 30):
+    points = []
+    for i in range(numPoints):
+        theta = i / numPoints * 2 * math.pi
+        y = radius * math.cos(theta)
+        z = radius * math.sin(theta)
+        points.append(Vec3(0, y, z))
+    return points

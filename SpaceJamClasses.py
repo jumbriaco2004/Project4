@@ -47,7 +47,7 @@ class SpaceStation(CapsuleCollidableObject):
         
 class Player(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, taskMgr, render, accept):
-        super(Player, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 20) #Changes radius value of drone
+        super(Player, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 10) #Changes radius value of drone
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
@@ -83,7 +83,6 @@ class Player(SphereCollideObject):
         self.accept("q", self.LeftRoll, [1])
         self.accept("q-up", self.LeftRoll, [0])
 
-    #Thrust
     def Thrust(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyThrust, "forward-thrust")
@@ -97,8 +96,6 @@ class Player(SphereCollideObject):
         self.modelNode.setFluidPos(self.modelNode.getPos() + trajectory * rate)
         return Task.cont
     
-    # H(eading).P(itch).R(oll)
-    #Left Turn (H)
     def LeftTurn(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyLeftTurn, "left-turn")
@@ -110,7 +107,6 @@ class Player(SphereCollideObject):
         self.modelNode.setH(self.modelNode.getH() + rate)
         return Task.cont
     
-    #Right Turn (H_)
     def RightTurn(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyRightTurn, "right-turn")
@@ -122,7 +118,6 @@ class Player(SphereCollideObject):
         self.modelNode.setH(self.modelNode.getH() - rate)
         return Task.cont
     
-    #Up Turn (P)
     def UpTurn(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyUpTurn, "up-turn")
@@ -134,7 +129,6 @@ class Player(SphereCollideObject):
         self.modelNode.setP(self.modelNode.getP() + rate)
         return Task.cont
     
-    #Down Turn (P)
     def DownTurn(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyDownTurn, "down-turn")
@@ -146,7 +140,6 @@ class Player(SphereCollideObject):
         self.modelNode.setP(self.modelNode.getP() - rate)
         return Task.cont
     
-    #Right Roll
     def RightRoll(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyRightRoll, "right-roll")
@@ -158,7 +151,6 @@ class Player(SphereCollideObject):
         self.modelNode.setR(self.modelNode.getR() + rate)
         return Task.cont
     
-        #Left Roll
     def LeftRoll(self, keyDown):
         if keyDown:
             self.taskMgr.add(self.ApplyLeftRoll, "left-roll")
@@ -173,7 +165,8 @@ class Player(SphereCollideObject):
 class Drone(SphereCollideObject):
     droneCount = 0
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 10)
+        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 20)
+
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
